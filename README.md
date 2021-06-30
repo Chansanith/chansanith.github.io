@@ -1,12 +1,10 @@
-## Chansanith's Code
+## Chansanith's
 
-You can use the [editor on GitHub](https://github.com/Chansanith/chansanith.github.io/edit/main/README.md) to maintain and preview the content for your website in Markdown files.
+Hi! My name [Chansanith Um](https://www.facebook.com/chansanith.um/) A simple guy who born from Sihanoukville, Cambodia. I'm not Developer or IT expert, I just love to learn about technology and like to reseacrch something new on the internet.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### Life?
 
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Live with your normal life & don't mess with me. Why? Because you are not clearly about me. Don't judge the book by it cover.
 
 ```markdown
 Syntax highlighted code block
