@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <title>图片空间 - 免费图片空间</title>
+    <link href="js/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/frontIndex.css?v=1.11" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+           <a class="navbar-brand" href="login.html">图片空间</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="index.html">首  页</a></li>
+                <li><a href="about.html">关于我们</a></li>
+                <li><a href="contact.html">联系我们</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+			    <li><a href="login.html">登 录</a></li>
+			    <li><a href="register.html">注 册</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>    <div class="container kv-main">
+	    <div class="row">
+	        <div class="col-md-offset-4 col-md-4">
+	            <div class="page-header">
+	                <h1 class="text-center"><small>注册成为图片空间会员</small></h1>
+	                <p class="text-center"><a href="login.html">已有账号？立即登录</a></p>
+	            </div>
+				<div id="register_div">
+		            <div class="form-group">
+						<input type="text" class="form-control input-lg" name="account" placeholder="邮箱" maxlength="50" minlength="5">
+					</div>
+		            <div class="form-group">
+						<input type="password" class="form-control input-lg" name="password" placeholder="密码" maxlength="20" minlength="6">
+					</div>
+					<div class="form-group">
+						<input type="password" class="form-control input-lg" name="repassword" placeholder="确认密码" maxlength="20" minlength="6">
+					</div>
+					<button type="button" id="register_btn" class="btn btn-primary btn-lg btn-block">注册</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+<footer class="footer">
+    <div class="container fcon">
+        <p class="text-muted">Copyright &#9400; 2017 Cat Networks Hong Kong Limited. All rights reserved. 请勿上传违反中国大陆和香港法律的图片，违者后果自负。</p>
+    </div>
+</footer></body>
+</html>
+<script src="js/jquery-1.12.4.min.js"></script>
+<script src="js/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="js/layer3/layer.min.js"></script>
+<script>
+$(function(){
+	var $vimg=$("#verifyImg");
+	$vimg.click(function(){
+		this.src="/verifycode?t="+(new Date().getTime());
+	});
+	var $div=$("#register_div"),$acc=$div.find("[name='account']"),$pwd=$div.find("[name='password']")
+		,$repwd=$div.find("[name='repassword']"),$vc=$div.find("[name='verifyCode']");
+	$div.find("#register_btn").click(function(){
+		var acc=$acc.val(),pwd=$pwd.val(),repwd=$repwd.val(),vc=$vc.val();
+		if(!/^[a-z0-9][a-z0-9._-]*@([a-z0-9][a-z0-9-]*.)+[a-z0-9]+$/.test(acc)){
+			layer.tips("请输入正确的邮箱地址",$acc);
+			$acc.focus();
+			return;
+		}
+		if(acc.length<5 || acc.length>50){
+			layer.tips("账户名长度必须在5～50个字符之间",$acc);
+			$acc.focus();
+			return;
+		}
+		if(!pwd || pwd.length<6|| pwd.length>20){
+			layer.tips("请输入6~20位密码",$pwd);
+			$pwd.focus();
+			return;
+		}
+		if(repwd!=pwd){
+			layer.tips("2次密码不一致",$repwd);
+			$repwd.focus();
+			return;
+		}
+		if(!vc || vc.length!=4){
+			layer.tips("请输入4位验证码",$vc);
+			$vc.focus();
+			return;
+		}
+		$.ajax({
+			url : "/registerAction",
+			method:"post",
+			data : {
+				account : acc,
+				password : pwd,
+				verifyCode:vc
+			},
+			success : function(data, textStatus, xhr) {
+				var ceipstate = xhr.getResponseHeader("ceipstate")
+				if (!ceipstate || ceipstate == 1) {// 正常响应
+					window.location.href = "/myImg";
+				} else {// 后台异常
+					layer.msg(data.msg||"后台异常，请联系管理员!");
+					$vimg.click();
+				}
+			}
+		});
+	});
+});
+</script>
